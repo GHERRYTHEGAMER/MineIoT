@@ -154,7 +154,7 @@ CREATE TABLE CHARTS (
 7. Edit the file "\MineIoTWebApp\private\database\charts\chartSQLdb.js" at the lines 4,5,6,8 with your own settings.
 
 ### App Services
-[App Services](https://learn.microsoft.com/en-us/azure/iot-hub/) is a service hosted in the cloud that enables you to build and host web apps, mobile back ends, and RESTful APIs in the programming language of your choice without managing infrastructure. It offers auto-scaling and high availability, supports both Windows and Linux, and enables automated deployments from any Git repo.
+[App Services](https://learn.microsoft.com/en-us/azure/app-service/overview) is a service hosted in the cloud that enables you to build and host web apps, mobile back ends, and RESTful APIs in the programming language of your choice without managing infrastructure. It offers auto-scaling and high availability, supports both Windows and Linux, and enables automated deployments from any Git repo.
 
 Using the Azure Portal.
 1. Create a new resource and using the search bar find 'app services'.
@@ -200,6 +200,7 @@ npm start
 4. Use [Any IOT devices Emulator](https://azure-samples.github.io/raspberry-pi-web-simulator/) to generate messages.
 
 **Authors**
+
 Cloud Computing - Dipartimento di Informatica - Università degli Studi di Salerno
 - Manuel Di Matteo
 - Gerardo Di Pascale
