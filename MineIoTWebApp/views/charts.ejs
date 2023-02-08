@@ -1,0 +1,132 @@
+<h1>My Charts</h1>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="../">Dashboard</a>
+  </li>
+  <li class="breadcrumb-item active">Charts</li>
+</ol>
+
+<!-- Create device -->
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fa-solid fa-square-plus"></i>
+    Add a chart</div>
+  <div class="card-body">
+    <div class="mb-3">
+      <form>
+        <div class="mb-3"><label for="deviceName">Device Name</label><input class="form-control" id="deviceName" type="text" placeholder="chart name"></div>
+        <div class="mb-3"><label for="labelName">Label Name</label><input class="form-control" id="labelName" type="text" placeholder="label name"></div>
+      </form>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-3">
+      <a href="create a chart for you ;P" id="create_chart" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fa-solid fa-plus"></i> Add chart
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Area Chart Example -->
+
+<% for(var chart of charts){%>
+<div class="card mb-3">
+  <!-- Card Header - Dropdown -->
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-chart-area"></i> <%= chart.name %></h6>
+    <a href="/charts/delete?deviceId=<%= chart.deviceId %>&label=<%= chart.label %>" class="d-none d-sm-inline-block btn btn-sm btn btn-danger shadow-sm">
+      <i class="fa-solid fa-trash"></i>
+    </a>
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+      <div class="chart-area">
+          <canvas id="<%= chart.name %>" width="100%" height="30%"></canvas>
+      </div>
+  </div>
+</div>
+<% } %>
+
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+
+<script src="js/myChart.js"></script>
+
+<!-- Create Button -->
+<script>
+  $(document).ready(function() {
+  $('#create_chart').click(function(event) {
+    event.preventDefault();
+    var deviceName = $('#deviceName').val();
+    var label = $('#labelName').val();
+    window.location.href = '/charts/create?deviceName=' + deviceName + '&label=' + label;
+  });
+});
+</script>
+
+<!-- Insert Chart -->
+<script>
+  charts = [];
+  
+<% for(var chart of charts){%>
+    chartDict = {};
+    var name = "<%= chart.name %>";
+    var label = "<%= chart.label %>";
+    var labels = [<% for(var label of chart.labels){ %>"<%= label %>",<% } %>];
+    var data = [<% for(var dat of chart.data){ %>"<%= dat %>",<% } %>];
+    
+    chartDict.name = name;
+    chartDict.labels = labels;
+    chartDict.data = data;
+    chartDict.label = label;
+
+    charts.push(chartDict);
+<% } %>
+  
+  $(document).ready(function() {
+    for(var chart of charts){
+      createChart(chart.name, chart.labels, chart.data, chart.label);
+    }
+  });
+</script>
+
+<% if(createFlag == "true"){ %>
+  <script>
+    alert("Chart creato con successo");
+  </script>
+<% }
+if(createFlag == "false"){ %>
+  <script>
+    alert("L' operazione di creazione non è riuscita");
+  </script>
+<% } %>
+
+<% if(deviceExistsFlag == "false"){ %>
+  <script>
+    alert("Device Name errato");
+  </script>
+<% } %>
+
+<% if(alreadyChartFlag == "false"){ %>
+  <script>
+    alert("Il chart con questi parametri già esiste");
+  </script>
+<% } %>
+
+<% if(deleteFlag == "true"){ %>
+  <script>
+    alert("Chart eliminato con successo");
+  </script>
+<% }
+if(deleteFlag == "false"){ %>
+  <script>
+    alert("L' operazione di elimininazione non è riuscita");
+  </script>
+<% } %>
+
+
+
+
+
