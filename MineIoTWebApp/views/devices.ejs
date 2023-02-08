@@ -1,0 +1,133 @@
+<h1>My Devices</h1>
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="../">Dashboard</a>
+  </li>
+  <li class="breadcrumb-item active">Devices</li>
+</ol>
+
+<!-- Create device -->
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fa-solid fa-square-plus"></i>Add a device</div>
+  <div class="card-body">
+    <div class="mb-3">
+      <form>
+        <div class="mb-3"><label for="deviceName">Device Name</label><input class="form-control" id="deviceName" type="text" placeholder="device name"></div>
+      </form>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-3">
+      <a href="create a devicce for you ;P" id="create_device" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fa-solid fa-plus"></i> Add device
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    Devices</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Connection String</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Name</th>
+            <th>Connection String</th>
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% for(var device of devices){%>
+          <tr>
+            <td><%= device.name %></td>
+            <td><%= device.connectionString %> 
+              <button id="copy-button-<%= device.deviceId %>" class="btn btn-sm btn-primary" 
+              onclick="copyToClipboard('<%= device.connectionString %>', 'copy-button-<%= device.deviceId %>')">Copy
+              </button>
+            </td>
+            <td><a href="/devices/delete?deviceId=<%= device.deviceId %>" class="d-none d-sm-inline-block btn btn-sm btn btn-danger shadow-sm">
+              <i class="fa-solid fa-trash"></i>
+            </a></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted">Updated now</div>
+</div>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Create Button -->
+<script>
+  $(document).ready(function() {
+  $('#create_device').click(function(event) {
+    event.preventDefault();
+    var deviceName = $('#deviceName').val();
+    window.location.href = '/devices/create?deviceName=' + deviceName;
+  });
+});
+</script>
+
+<script>
+  $(document).ready(function() {
+  $('#dataTable').DataTable();
+});
+</script>
+
+<% if(createFlag == "true"){ %>
+  <script>
+    alert("Device creato con successo");
+  </script>
+<% }
+if(createFlag == "false"){ %>
+  <script>
+    alert("L'operazione di creazione non è riuscita");
+  </script>
+<% } %>
+
+
+<% if(deleteFlag == "true"){ %>
+  <script>
+    alert("Device eliminato con successo");
+  </script>
+<% }
+if(deleteFlag == "false"){ %>
+  <script>
+    alert("L'operazione di eliminazione non è riuscita");
+  </script>
+<% } %>
+
+<% if(nameFlag == "false"){ %>
+  <script>
+    alert("Esiste già un device con questo nome");
+  </script>
+<% } %>
+
+<script>
+  function copyToClipboard(text, buttonId) {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    //document.getElementById(buttonId).innerHTML = 'Copied!';
+  }
+  </script>
+
