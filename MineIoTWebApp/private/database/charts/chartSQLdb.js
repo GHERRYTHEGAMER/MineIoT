@@ -17,7 +17,7 @@ const config = {
 module.exports = {
     connectAndQuery: async function(query){
         try {
-            var poolConnection = await sql.connect(config);
+            var poolConnection = sql.connect(config);
     
             console.log("connectAndQuery: Executing Query");
             var resultSet = await poolConnection.request().query(query);
