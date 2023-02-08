@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   var nameFlag = req.query.nameFlag;
 
   var email = req.headers["x-ms-client-principal-name"];
-  if(email == Null || email === ""){
+  if(email == null || email === ""){
     email = 'manuei225225@gmail.com';
   }
   
@@ -45,7 +45,7 @@ router.get('/create', function(req, res, next){
   console.log("createDispositivo");
 
   var email = req.headers["x-ms-client-principal-name"];
-  if(email == Null || email === ""){
+  if(email == null || email === ""){
     email = 'manuei225225@gmail.com';
   }
   const deviceName = req.query.deviceName;
